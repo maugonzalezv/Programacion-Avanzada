@@ -85,7 +85,7 @@ int main(){
     int nNormales = (normales.empty() ? 0 : stoi(normales));
 
     if(nMillones == 0 && nMiles == 0 && nNormales == 0){
-        cout << "cero\n";
+        cout << "cero"<<endl;
         return 0;
     }
 
@@ -113,6 +113,6 @@ int main(){
         salida += convertirTresCifras(nNormales);
     }
 
-    cout << salida << "\n";
+    cout << salida <<endl;
     return 0;
 }
