@@ -3,116 +3,116 @@
 #include <algorithm>
 using namespace std;
 
-string convertirTresCifras(int n){
-    string unidades[] = {"", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
-    string decenas10_15[] = {"diez", "once", "doce", "trece", "catorce", "quince"};
-    string decenasMultiplo[] = {"", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
-    string centenas[] = {"", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos",
+string numeroATexto(int numeroEntrada){
+    string palabrasUnidades[] = {"", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
+    string palabrasEspeciales[] = {"diez", "once", "doce", "trece", "catorce", "quince"};
+    string palabrasDecenas[] = {"", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
+    string palabrasCentenas[] = {"", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos",
                          "seiscientos", "setecientos", "ochocientos", "novecientos"};
 
-    if(n == 0){
+    if(numeroEntrada == 0){
         return "";
     } 
-    if(n == 100){
+    if(numeroEntrada == 100){
         return "cien";
     } 
 
-    int c = n / 100;
-    int r = n % 100;
-    int d = r / 10;
-    int u = r % 10;
+    int centena = numeroEntrada / 100;
+    int restante = numeroEntrada % 100;
+    int decena = restante / 10;
+    int unidad = restante % 10;
 
-    string texto = "";
+    string resultado = "";
 
-    if(c > 0){
-        texto += centenas[c];
+    if(centena > 0){
+        resultado += palabrasCentenas[centena];
     }
 
-    if(r > 0){
-        if(!texto.empty()) texto += " ";
-        if(r < 10){
-            texto += unidades[u];
-        } else if(r >= 10 && r <= 15){
-            texto += decenas10_15[r - 10];
-        } else if(r >= 16 && r <= 19){
-            texto += "dieci" + unidades[u];
-        } else if(r == 20){
-            texto += "veinte";
-        } else if(r > 20 && r < 30){
-            texto += "veinti" + unidades[u];
+    if(restante > 0){
+        if(!resultado.empty()) resultado += " ";
+        if(restante < 10){
+            resultado += palabrasUnidades[unidad];
+        } else if(restante >= 10 && restante <= 15){
+            resultado += palabrasEspeciales[restante - 10];
+        } else if(restante >= 16 && restante <= 19){
+            resultado += "dieci" + palabrasUnidades[unidad];
+        } else if(restante == 20){
+            resultado += "veinte";
+        } else if(restante > 20 && restante < 30){
+            resultado += "veinti" + palabrasUnidades[unidad];
         } else {
-            texto += decenasMultiplo[d];
-            if(u > 0){
-                texto += " y " + unidades[u];
+            resultado += palabrasDecenas[decena];
+            if(unidad > 0){
+                resultado += " y " + palabrasUnidades[unidad];
             }
         }
     }
 
-    return texto;
+    return resultado;
+}
+
+string quitarCerosDelInicio(string textoNumero){
+    int posicion = 0;
+    while(posicion + 1 < (int)textoNumero.size() && textoNumero[posicion] == '0') posicion++;
+    return textoNumero.substr(posicion);
 }
 
 int main(){
-    string numero;
-    cin >> numero;
+    string numeroIngresado;
+    cin >> numeroIngresado;
 
-    string normales, miles, millones;
+    string parteNormales, parteMiles, parteMillones;
 
-    int len = (int)numero.length();
+    int longitudNumero = (int)numeroIngresado.length();
 
-    if(len <= 3){
-        normales = numero;
-    } else if(len <= 6){
-        normales = numero.substr(len - 3);
-        miles = numero.substr(0, len - 3);
+    if(longitudNumero <= 3){
+        parteNormales = numeroIngresado;
+    } else if(longitudNumero <= 6){
+        parteNormales = numeroIngresado.substr(longitudNumero - 3);
+        parteMiles = numeroIngresado.substr(0, longitudNumero - 3);
     } else {
-        normales = numero.substr(len - 3);
-        miles = numero.substr(len - 6, 3);
-        millones = numero.substr(0, len - 6);
+        parteNormales = numeroIngresado.substr(longitudNumero - 3);
+        parteMiles = numeroIngresado.substr(longitudNumero - 6, 3);
+        parteMillones = numeroIngresado.substr(0, longitudNumero - 6);
     }
 
-    auto limpia = [](string s){
-        int p = 0;
-        while(p + 1 < (int)s.size() && s[p] == '0') p++;
-        return s.substr(p);
-    };
+    if(!parteMillones.empty()) parteMillones = quitarCerosDelInicio(parteMillones);
+    if(!parteMiles.empty()) parteMiles = quitarCerosDelInicio(parteMiles);
+    if(!parteNormales.empty()) parteNormales = quitarCerosDelInicio(parteNormales);
 
-    if(!millones.empty()) millones = limpia(millones);
-    if(!miles.empty()) miles = limpia(miles);
-    if(!normales.empty()) normales = limpia(normales);
+    int numeroMillones = (parteMillones.empty() ? 0 : stoi(parteMillones));
+    int numeroMiles    = (parteMiles.empty()    ? 0 : stoi(parteMiles));
+    int numeroNormales = (parteNormales.empty() ? 0 : stoi(parteNormales));
 
-    int nMillones = (millones.empty() ? 0 : stoi(millones));
-    int nMiles    = (miles.empty()    ? 0 : stoi(miles));
-    int nNormales = (normales.empty() ? 0 : stoi(normales));
-
-    if(nMillones == 0 && nMiles == 0 && nNormales == 0){
+    if(numeroMillones == 0 && numeroMiles == 0 && numeroNormales == 0){
         cout << "cero"<<endl;
         return 0;
     }
 
-    string salida = "";
+    string textoFinal = "";
 
-    if(nMillones > 0){
-        if(nMillones == 1){
-            salida += "un millon";
+    if(numeroMillones > 0){
+        if(numeroMillones == 1){
+            textoFinal += "un millon";
         } else {
-            salida += convertirTresCifras(nMillones) + " millones";
+            textoFinal += numeroATexto(numeroMillones) + " millones";
         }
     }
 
-    if(nMiles > 0){
-        if(!salida.empty()) salida += " ";
-        if(nMiles == 1){
-            salida += "mil"; 
+    if(numeroMiles > 0){
+        if(!textoFinal.empty()) textoFinal += " ";
+        if(numeroMiles == 1){
+            textoFinal += "mil"; 
         } else {
-            salida += convertirTresCifras(nMiles) + " mil";
+            textoFinal += numeroATexto(numeroMiles) + " mil";
         }
     }
 
-    if(nNormales > 0){
-        if(!salida.empty()) salida += " ";
-        salida += convertirTresCifras(nNormales);
+    if(numeroNormales > 0){
+        if(!textoFinal.empty()) textoFinal += " ";
+        textoFinal += numeroATexto(numeroNormales);
     }
 
-    cout << salida <<endl;
+    cout << textoFinal <<endl;
     return 0;
 }
