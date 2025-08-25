@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <cctype>
 
 using namespace std;
 
@@ -8,6 +10,13 @@ bool validar(string email){
     int atPosition = 0;
     int dotCount = 0;
 
+    transform(email.begin(), email.end(), email.begin(), :: tolower);
+
+    char final = email[email.size()-1];
+    if(final> 'a' || final <'z'){
+        return false;
+    }
+
     for(int i=0;i<email.size();i++){
         if(email[i]=='@'){
             atCount++;
@@ -15,6 +24,7 @@ bool validar(string email){
         if(atCount>1){
             return false;
         }
+        if()
 
     }
     
