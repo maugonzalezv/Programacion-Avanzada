@@ -12,6 +12,9 @@ bool validar(string email){
         if(email[i]=='@'){
             atCount++;
         }
+        if(atCount>1){
+            return false;
+        }
 
     }
     
