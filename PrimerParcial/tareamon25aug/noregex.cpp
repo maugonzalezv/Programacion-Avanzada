@@ -6,7 +6,11 @@ using namespace std;
 bool validar(string email){
     int atCount = 0;
     int dotCount = 0;
-    
+
+    for(int i=0;i<email.size();i++){
+        
+
+    }
     
 }
 
