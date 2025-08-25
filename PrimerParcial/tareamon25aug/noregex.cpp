@@ -8,7 +8,6 @@ using namespace std;
 bool validar(string email){
     int atCount = 0;
     int atPosition = 0;
-    int dotCount = 0;
 
     transform(email.begin(), email.end(), email.begin(), :: tolower);
 
@@ -18,15 +17,18 @@ bool validar(string email){
     }
 
     for(int i=0;i<email.size();i++){
-        if(email[i]=='@'){
-            atCount++;
+        while(email[i]!='@'){
+            atPosition++;
         }
-        if(atCount>1){
+        if(email[i]=='@'){
             return false;
         }
-        if()
+        if(email[i+1]== '.'){
+            return false;
+        }
 
     }
+    return true;
     
 }
 
