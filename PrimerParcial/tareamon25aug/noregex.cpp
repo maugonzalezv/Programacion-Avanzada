@@ -3,37 +3,6 @@
 
 using namespace std;
 
-void imprimirLinea(string arr[], int n, int sumaLetras, int ultima, int ancho){
-    if(n==0) return;
-
-    if(ultima==1 || n==1){
-        cout<<arr[0];
-        for(int i=1;i<n;i++){
-            cout<<' '<<arr[i];
-        }
-        cout<<endl;
-        return;
-    }
-
-    int huecos = n - 1;
-    int espaciosTotales = ancho - sumaLetras;
-    int base = espaciosTotales / huecos;
-    int extra = espaciosTotales % huecos;
-
-    cout<<arr[0];
-    for(int i=0;i<huecos;i++){
-        int aImprimir = base;
-        if(i<extra){
-            aImprimir = aImprimir + 1;
-        }
-        for(int s=0;s<aImprimir;s++){
-            cout<<' ';
-        }
-        cout<<arr[i+1];
-    }
-    cout<<endl;
-}
-
 int main(){
     int ancho = 65;
     string palabra;
