@@ -4,6 +4,9 @@
 using namespace std;
 
 bool validar(string email){
+    int atCount = 0;
+    int dotCount = 0;
+    
     
 }
 
@@ -17,6 +20,6 @@ int main(){
     } else {
         cout<<"Email invalido"<<endl;
     }   
-    
+
     return 0;
 }
