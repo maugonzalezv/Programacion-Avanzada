@@ -1,57 +1,14 @@
 #include <iostream>
 #include <string>
+#include <regex>
 using namespace std;
 
-bool validar(string email){
+bool validar_regex(string email){
     if(email.size() == 0){
         throw "No ingresaste ningun valor";
     }
-
-    for(int i=0; i<email.size(); i++){
-        if(email[i] >= 'A' && email[i] <= 'Z'){
-            email[i] = email[i] - 'A' + 'a';
-        }
-    }
-
-    char final = email[email.size()-1];
-    if(final < 'a' || final > 'z'){
-        return false;
-    }
-    if(email[email.size()-1] == '.'){
-        return false;
-    }
-    if(email[0] == '.') return false;
-    for(int i=0; i<email.size()-1; i++){
-        if(email[i] == '.' && email[i+1] == '.'){
-            return false;
-        }
-    }
-
-    int atCount = 0;
-    int atPos = -1;
-    for(int i=0; i<email.size(); i++){
-        if(email[i] == '@'){
-            atCount++;
-            atPos = i;
-            if(atCount > 1) return false;
-        }
-    }
-
-    if(atCount != 1) return false;
-    if(atPos == 0 || atPos == email.size()-1) return false;
-    if(email[atPos-1] == '.') return false;
-    if(email[atPos+1] == '.') return false;
-
-    bool puntoDespues = false;
-    for(int i=atPos+1; i<email.size(); i++){
-        if(email[i] == '.'){
-            puntoDespues = true;
-            break;
-        }
-    }
-    if(puntoDespues == false) return false;
-
-    return true;
+    regex r("^[A-Za-z0-9]+([._%+-]?[A-Za-z0-9]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,63}$");
+    return regex_match(email, r);
 }
 
 int main(){
@@ -60,7 +17,7 @@ int main(){
     cin>>email;
 
     try{
-        if(validar(email)){
+        if(validar_regex(email)){
             cout<<"Email valido"<<endl;
         } else {
             cout<<"Email invalido"<<endl;
