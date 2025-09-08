@@ -1,15 +1,9 @@
-// M#Matricula#p1.c++
-// Participantes:
-// - Nombre 1 - Matricula 1
-// - Nombre 2 - Matricula 2
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <regex>
 using namespace std;
 
-// ---------- IO ----------
 string leerArchivoComoString(const string& ruta){
     ifstream in(ruta.c_str());
     string json, linea;
@@ -24,7 +18,6 @@ string leerArchivoComoString(const string& ruta){
     return json;
 }
 
-// ---------- helpers ----------
 string trimSimple(const string& s){
     int i = 0;
     int j = (int)s.size() - 1;
