@@ -99,6 +99,6 @@ int main() {
         cout << "Error: " << e.what() << endl;
     }
 
-    cout << endl << "Programa finalizado correctamente." << endl;
+    cout << endl << "FIN" << endl;
     return 0;
 }
