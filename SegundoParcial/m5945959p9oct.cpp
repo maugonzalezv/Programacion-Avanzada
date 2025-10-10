@@ -25,7 +25,7 @@ bool buscarPalabra(char sopa[][15], int filas, int columnas, string palabra, int
         }
 
         if(k == len) {
-            cout << "DEBUG: palabra encontrada en direccion " << dir << " desde (" << fila << "," << col << ")" << endl;
+            cout << "palabra encontrada " << dir << " desde (" << fila << "," << col << ")" << endl;
             return true;
         }
     }
@@ -42,7 +42,7 @@ void resolverSopa(char sopa[][15], int filas, int columnas, vector<string> palab
             for(int j = 0; j < columnas; j++) {
                 if(sopa[i][j] == palabra[0]) {
                     if(buscarPalabra(sopa, filas, columnas, palabra, i, j)) {
-                        cout << "✔ " << palabra << " encontrada en (" << i << "," << j << ")" << endl;
+                        cout  << palabra << " encontrada en (" << i << "," << j << ")" << endl;
                         encontrada = true;
                     }
                 }
@@ -50,7 +50,7 @@ void resolverSopa(char sopa[][15], int filas, int columnas, vector<string> palab
         }
 
         if(!encontrada) {
-            cout << "✘ " << palabra << " no encontrada" << endl;
+            cout << palabra << " no encontrada" << endl;
         }
         cout << endl;
     }
