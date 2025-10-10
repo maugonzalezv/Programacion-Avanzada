@@ -92,7 +92,7 @@ int main() {
             palabras.push_back(palabra);
         }
 
-        cout << endl << "DEBUG: Iniciando busqueda en sopa..." << endl;
+        cout << endl << "DEBUG: Iniciando busqueda en sopa de letras..." << endl;
         resolverSopa(sopa, filas, columnas, palabras);
 
     } catch(exception &e) {
