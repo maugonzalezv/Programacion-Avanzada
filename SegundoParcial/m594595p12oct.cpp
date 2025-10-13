@@ -17,7 +17,6 @@ struct NodoDist {
 };
 
 int main() {
-    // Grafo no dirigido según las aristas y pesos dados
     unordered_map<string, vector<pair<string, int>>> grafo;
 
     grafo["s"].push_back(make_pair("b", 4));
@@ -75,7 +74,6 @@ int main() {
         NodoDist actual = pq.top();
         pq.pop();
 
-        // Si ya encontramos mejor distancia antes, se ignora esta entrada
         if (actual.dist > dist[actual.nodo]) {
             continue;
         }
