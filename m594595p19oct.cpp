@@ -1,5 +1,3 @@
-// Astar_10x10_simple.cpp
-
 #include <iostream>
 #include <queue>
 #include <vector>
