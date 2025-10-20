@@ -38,21 +38,19 @@ int main(){
         cout << "2 decifrar" << endl;
         cin >> opcion;
 
-        cout << "Ingresa el texto: ";
+        cout << "escribe el texto";
         getline(cin, texto);
-
-        cout << "Debug: texto original -> " << texto << endl;
 
         if (opcion == 1) {
             string cifrado = cifrar(texto);
-            cout << "Texto cifrado: " << cifrado << endl;
+            cout << "texto cifrado: " << cifrado << endl;
         } 
         else if (opcion == 2) {
             string decifrado = decifrar(texto);
-            cout << "Texto decifrado: " << decifrado << endl;
+            cout << "texto decifrado: " << decifrado << endl;
         } 
         else {
-            cout << "Opcion no valida" << endl;
+            cout << "escribe solo 1 o 2" << endl;
         }
     }
     catch(...){
