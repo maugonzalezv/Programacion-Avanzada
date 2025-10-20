@@ -42,7 +42,7 @@ void imprimirRuta(int a[5][5], int px[5][5], int py[5][5]) {
         k++;
     }
 
-    cout << "Ruta (from inicio a fin):" << endl;
+    cout << "Ruta:" << endl;
     for (int t = k-1; t >= 0; t--) {
         cout << "(" << rutaI[t] << "," << rutaJ[t] << ") val=" << rutaVal[t];
         if (t) cout << " -> ";
@@ -65,7 +65,7 @@ int main() {
 
         calcularDP(a, dp, px, py);
 
-        cout << "Debug DP (max suma acumulada por celda):" << endl;
+        cout << "Debug DP max suma por celda:" << endl;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 cout << dp[i][j];
@@ -74,7 +74,7 @@ int main() {
             cout << endl;
         }
 
-        cout << "Maxima suma (inicio->fin): " << dp[4][4] << endl;
+        cout << "Maxima suma: " << dp[4][4] << endl;
         imprimirRuta(a, px, py);
     }
     catch (...) {
