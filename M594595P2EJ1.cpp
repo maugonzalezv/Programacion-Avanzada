@@ -39,7 +39,7 @@ int main(){
         cin >> opcion;
         cin.ignore();
 
-        cout << "escribe el texto";
+        cout << "escribe el texto: ";
         getline(cin, texto);
 
         if (opcion == 1) {
