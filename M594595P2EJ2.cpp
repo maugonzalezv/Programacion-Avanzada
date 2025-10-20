@@ -41,7 +41,6 @@ int reconstruirRuta(int a[5][5], int px[5][5], int py[5][5], int rutaVals[25], i
         k++;
     }
 
-    // invertir
     int n = k;
     for (int t = 0; t < n; t++) {
         rutaVals[t] = tmpVals[n - 1 - t];
@@ -64,14 +63,6 @@ int main() {
         int dp[5][5], px[5][5], py[5][5];
         calcularDP(a, dp, px, py);
 
-        cout << "Debug DP max suma por celda:" << endl;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                cout << dp[i][j];
-                if (j < 4) cout << "\t";
-            }
-            cout << endl;
-        }
         cout << "Maxima suma (inicio->fin): " << dp[4][4] << endl;
 
         int rutaVals[25], rutaI[25], rutaJ[25];
@@ -84,8 +75,7 @@ int main() {
         }
         cout << endl;
 
-        // Mejor bloque contiguo de 3 en la secuencia (yo + 2 siguientes) o (yo + 2 anteriores)
-        int bestSuma = -1, bestIdx = -1; // bestIdx = indice inicial del bloque de 3
+        int bestSuma = -1, bestIdx = -1;
         for (int t = 0; t + 2 < n; t++) {
             int s = rutaVals[t] + rutaVals[t+1] + rutaVals[t+2];
             if (s > bestSuma) {
@@ -95,7 +85,7 @@ int main() {
         }
 
         if (bestIdx != -1) {
-            cout << "Mejor bloque de 3 contiguos en la ruta: "
+            cout << "Mejor bloque de 3 contiguos: "
                  << rutaVals[bestIdx] << ", "
                  << rutaVals[bestIdx+1] << ", "
                  << rutaVals[bestIdx+2] << endl;
