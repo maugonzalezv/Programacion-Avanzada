@@ -37,6 +37,7 @@ int main(){
         cout << "1 cifrar" << endl;
         cout << "2 decifrar" << endl;
         cin >> opcion;
+        cin.ignore();
 
         cout << "escribe el texto";
         getline(cin, texto);
