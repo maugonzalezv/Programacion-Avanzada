@@ -1,5 +1,5 @@
 // Astar_10x10_simple.cpp
-// A*: ruta más corta en 10x10 con 4 direcciones.
+
 #include <iostream>
 #include <queue>
 #include <vector>
