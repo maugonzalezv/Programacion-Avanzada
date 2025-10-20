@@ -2,7 +2,6 @@
 // A*: ruta más corta en 10x10 con 4 direcciones.
 // Entradas: inicio (x y), meta (x y), 4 obstáculos (x y), factor h, debug (s/n).
 // Salida: tablero con S, T, #, *, .  y costos básicos.
-// Estilo simple: sin struct, sin sync_with_stdio ni cin.tie.
 
 #include <iostream>
 #include <queue>
