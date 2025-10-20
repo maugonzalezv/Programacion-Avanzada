@@ -60,7 +60,7 @@ int main() {
         int rutaVals[25];
         int n = reconstruirRuta(a, px, py, rutaVals);
 
-        cout << "Ruta (valores): ";
+        cout << "Ruta: ";
         for (int t = 0; t < n; t++) {
             cout << rutaVals[t];
             if (t < n-1) cout << " -> ";
@@ -73,9 +73,9 @@ int main() {
             if (s > bestSuma) { bestSuma = s; bi = t; }
         }
 
-        cout << "Mejor bloque de 3 contiguos en la ruta: "
+        cout << "mayor suma de 3 seguidos: "
              << rutaVals[bi] << ", " << rutaVals[bi+1] << ", " << rutaVals[bi+2] << endl;
-        cout << "Suma = " << bestSuma << endl;
+        cout << "suma = " << bestSuma << endl;
     }
     catch (...) {
         cout << "Ocurrio un error" << endl;
