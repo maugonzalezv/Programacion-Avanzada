@@ -7,9 +7,9 @@ void limpiar() {
   for (int i = 0; i < 120; i++) cout << "\n";
 }
 
-void dibujar(char grid[][100], int w, int h, int* sx, int* sy, int len, int fx, int fy, int score, int turno) {
+void dibujar(char grid[][100], int w, int h, int* sx, int* sy, int len, int fx, int fy, int score, int seg) {
   limpiar();
-  cout << "SNAKE " << w << "x" << h << "  Score: " << score << "  Turno: " << turno << "\n";
+  cout << "SNAKE " << w << "x" << h << "  Score: " << score << "  Seg: " << seg << "\n";
   for (int i = 0; i < w + 2; i++) cout << '#';
   cout << "\n";
   for (int y = 0; y < h; y++) {
@@ -23,7 +23,8 @@ void dibujar(char grid[][100], int w, int h, int* sx, int* sy, int len, int fx, 
   }
   for (int i = 0; i < w + 2; i++) cout << '#';
   cout << "\n";
-  cout << "Controles: W/A/S/D  (I/J/K/L)   Q: salir\n";
+  cout << "W/A/S/D o I/J/K/L para girar. Q para salir.\n";
+  cout.flush();
 }
 
 void limpiarGrid(char grid[][100], int w, int h) {
@@ -62,8 +63,8 @@ int main() {
   try {
     int w = 100;
     int h = 100;
-    int maxN = w * h;
-    if (maxN > 10000) return 0;
+    int maxn = w * h;
+    if (maxn > 10000) return 0;
 
     int sx[10000];
     int sy[10000];
@@ -79,9 +80,9 @@ int main() {
 
     int foodAlive = 0;
     int fx = -1, fy = -1;
-    int foodBornTurn = -1000000;
-    int spawnEveryTurns = 5;
-    int foodLifetimeTurns = 10;
+    int foodBornSec = -1000000;
+    int spawnEverySec = 5;
+    int foodLifetimeSec = 10;
 
     char grid[100][100];
 
@@ -89,30 +90,39 @@ int main() {
 
     int score = 0;
     int alive = 1;
-    int turno = 0;
+    int seg = 0;
 
     pintar(grid, w, h, sx, sy, len, fx, fy);
-    dibujar(grid, w, h, sx, sy, len, fx, fy, score, turno);
+    dibujar(grid, w, h, sx, sy, len, fx, fy, score, seg);
+
+    time_t t0 = time(0);
 
     while (alive) {
-      string s;
-      if (!getline(cin, s)) break;
-      char c = s.size() ? s[0] : 0;
-      if (c == 'q' || c == 'Q') break;
+      while (cin.rdbuf()->in_avail() > 0) {
+        char c;
+        cin.get(c);
+        if (c == 'q' || c == 'Q') { alive = 0; break; }
+        int ndx = dx, ndy = dy;
+        if (c=='w' || c=='W' || c=='i' || c=='I') { ndx = 0; ndy = -1; }
+        if (c=='s' || c=='S' || c=='k' || c=='K') { ndx = 0; ndy =  1; }
+        if (c=='a' || c=='A' || c=='j' || c=='J') { ndx = -1; ndy =  0; }
+        if (c=='d' || c=='D' || c=='l' || c=='L') { ndx =  1; ndy =  0; }
+        if (!(ndx == -dx && ndy == -dy)) { dx = ndx; dy = ndy; }
+        while (cin.rdbuf()->in_avail() > 0) { char dump; cin.get(dump); }
+      }
+      if (!alive) break;
 
-      int ndx = dx, ndy = dy;
-      if (c=='w' || c=='W' || c=='i' || c=='I') { ndx = 0; ndy = -1; }
-      if (c=='s' || c=='S' || c=='k' || c=='K') { ndx = 0; ndy =  1; }
-      if (c=='a' || c=='A' || c=='j' || c=='J') { ndx = -1; ndy =  0; }
-      if (c=='d' || c=='D' || c=='l' || c=='L') { ndx =  1; ndy =  0; }
-      if (!(ndx == -dx && ndy == -dy)) { dx = ndx; dy = ndy; }
+      time_t t1 = time(0);
+      if (t1 == t0) continue;
+      t0 = t1;
+      seg++;
 
-      if (!foodAlive && (turno % spawnEveryTurns == 0)) {
+      if (!foodAlive && (seg % spawnEverySec == 0)) {
         colocarComida(w, h, sx, sy, len, fx, fy);
         foodAlive = 1;
-        foodBornTurn = turno;
+        foodBornSec = seg;
       }
-      if (foodAlive && (turno - foodBornTurn) >= foodLifetimeTurns) {
+      if (foodAlive && (seg - foodBornSec) >= foodLifetimeSec) {
         foodAlive = 0; fx = -1; fy = -1;
       }
 
@@ -134,24 +144,21 @@ int main() {
       if (alive && foodAlive && sx[0] == fx && sy[0] == fy) {
         score++;
         foodAlive = 0; fx = -1; fy = -1;
-        if (len + 1 < maxN) {
+        if (len + 1 < maxn) {
           sx[len] = sx[len - 1];
           sy[len] = sy[len - 1];
           len++;
         }
       }
 
-      turno++;
       pintar(grid, w, h, sx, sy, len, fx, fy);
-      dibujar(grid, w, h, sx, sy, len, fx, fy, score, turno);
+      dibujar(grid, w, h, sx, sy, len, fx, fy, score, seg);
     }
 
     cout << "\nGAME OVER  Score: " << score << "\n";
     return 0;
-  } catch (const exception& e) {
-    cerr << "[ERROR] " << e.what() << "\n";
   } catch (...) {
-    cerr << "[ERROR] desconocido\n";
+    cerr << "[ERROR]\n";
   }
   return 0;
 }
