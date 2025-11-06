@@ -23,7 +23,7 @@ void dibujar(char grid[][100], int w, int h, int* sx, int* sy, int len, int fx, 
   }
   for (int i = 0; i < w + 2; i++) cout << '#';
   cout << "\n";
-  cout << "W/A/S/D o I/J/K/L para girar. Q para salir.\n";
+  cout << "W/A/S/D para girar. Q para salir.\n";
   cout.flush();
 }
 
@@ -60,11 +60,15 @@ void colocarComida(int w, int h, int* sx, int* sy, int len, int& fx, int& fy) {
 }
 
 int main() {
+  // Habilitar lectura instantánea en macOS/Linux (sin Enter)
+  // Ignorado si no existe 'stty' (por ejemplo, en Windows).
+  system("stty -icanon -echo min 0 time 0");
+
   try {
     int w = 100;
     int h = 100;
     int maxn = w * h;
-    if (maxn > 10000) return 0;
+    if (maxn > 10000) { system("stty sane"); return 0; }
 
     int sx[10000];
     int sy[10000];
@@ -103,12 +107,11 @@ int main() {
         cin.get(c);
         if (c == 'q' || c == 'Q') { alive = 0; break; }
         int ndx = dx, ndy = dy;
-        if (c=='w' || c=='W' || c=='i' || c=='I') { ndx = 0; ndy = -1; }
-        if (c=='s' || c=='S' || c=='k' || c=='K') { ndx = 0; ndy =  1; }
-        if (c=='a' || c=='A' || c=='j' || c=='J') { ndx = -1; ndy =  0; }
-        if (c=='d' || c=='D' || c=='l' || c=='L') { ndx =  1; ndy =  0; }
+        if (c=='w' || c=='W') { ndx = 0; ndy = -1; }
+        if (c=='s' || c=='S') { ndx = 0; ndy =  1; }
+        if (c=='a' || c=='A') { ndx = -1; ndy =  0; }
+        if (c=='d' || c=='D') { ndx =  1; ndy =  0; }
         if (!(ndx == -dx && ndy == -dy)) { dx = ndx; dy = ndy; }
-        while (cin.rdbuf()->in_avail() > 0) { char dump; cin.get(dump); }
       }
       if (!alive) break;
 
@@ -155,10 +158,13 @@ int main() {
       dibujar(grid, w, h, sx, sy, len, fx, fy, score, seg);
     }
 
+    system("stty sane");
     cout << "\nGAME OVER  Score: " << score << "\n";
     return 0;
   } catch (...) {
+    system("stty sane");
     cerr << "[ERROR]\n";
   }
+  system("stty sane");
   return 0;
 }
